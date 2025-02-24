@@ -4,7 +4,6 @@ import { buildRoutePath } from "./utils/build-route-path.js";
 
 const database = new Database();
 
-// Rotas organizadas para produtos e estoque
 export const routes = [
   // 🏷️ Products
   {
@@ -136,7 +135,7 @@ export const routes = [
     },
   },
 
-  // 🏷️ Produtos + stock & price
+  // 🏷️ Products + stock & price
   {
     method: "GET",
     path: buildRoutePath("/products-with-skus"),

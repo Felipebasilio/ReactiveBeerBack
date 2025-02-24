@@ -17,7 +17,6 @@ export class Database {
       const data = await fs.readFile(databasePath, "utf8");
       this.#database = JSON.parse(data);
 
-      // Se o banco de dados estiver vazio, popula com os dados dos arquivos
       if (!this.#database.products || !this.#database.stockPrice) {
         this.#initializeDatabase();
       }
