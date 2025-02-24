@@ -16,7 +16,26 @@ export const routes = [
         "products",
         search ? { brand: search } : null
       );
-      return res.end(JSON.stringify(products));
+      const stockPriceData = database.select("stockPrice");
+
+      const productsWithStock = products.map((product) => {
+        return {
+          ...product,
+          image: `http://localhost:3333${product.image}`,
+          skus: product.skus.map((sku) => {
+            const stockInfo = stockPriceData.find(
+              (s) => s.sku.toString() === sku.code.toString()
+            ) || { stock: 0, price: 0 };
+            return {
+              ...sku,
+              stock: stockInfo.stock,
+              price: stockInfo.price
+            };
+          }),
+        };
+      });
+
+      return res.end(JSON.stringify(productsWithStock));
     },
   },
   {
