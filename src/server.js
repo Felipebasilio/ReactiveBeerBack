@@ -8,6 +8,17 @@ import { extractQueryParams } from "./utils/extract-query-params.js";
 const server = http.createServer(async (req, res) => {
   const { method, url } = req;
 
+  // 🔥 Adiciona os cabeçalhos CORS em TODAS as respostas 🔥
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
+  // 🔥 Responde rapidamente às requisições OPTIONS 🔥
+  if (method === "OPTIONS") {
+    res.writeHead(204).end();
+    return;
+  }
+
   // Servindo arquivos estáticos da pasta public/
   if (url.startsWith("/public/")) {
     const filePath = path.join(process.cwd(), url);
